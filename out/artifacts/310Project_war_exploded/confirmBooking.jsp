@@ -153,7 +153,7 @@
                         <div id="accordion" class="plan-accordion">
                             <div class="panel">
                                 <div class="panel-header" id="headingOne">
-                                    <button style="background-color: #7abaff" class="panel-link active"
+                                    <button style="background-color: #7abaff; border: none" class="panel-link active"
                                             data-toggle="collapse" data-target="#confirmMsg" role="button"
                                             aria-expanded="false" aria-controls="confirm"><b
                                             style="margin-left: 45%; font-size: 24px">Book</b></button>
@@ -166,12 +166,12 @@
                                             <input type="hidden" name="checkIn" value="<%=checkIn%>">
                                             <input type="hidden" name="checkOut" value="<%=checkOut%>">
                                             <button class="btn btn-success"
-                                                    style="margin-left: 10px; background-color: #7abaff;" type="submit">
+                                                    style="margin-left: 10px; background-color: #7abaff; border: none" type="submit">
                                                 Yes, Book now
                                             </button>
                                             <button type="button" class="btn btn-success" data-toggle="collapse"
                                                     data-target="#confirmMsg"
-                                                    style="margin-left: 10px; background-color: #7abaff; min-width: 60px">
+                                                    style="margin-left: 10px; background-color: #7abaff; min-width: 60px; border: none">
                                                 No
                                             </button>
                                         </p>

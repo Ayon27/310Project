@@ -1,5 +1,5 @@
-<%@ page import="java.sql.Connection" %>
 <%@ page import="com.DB.DatabaseConnection" %>
+<%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.SQLException" %><%--
@@ -75,20 +75,20 @@
     <%
         String s = (String) session.getAttribute("id");
 
-            try {
-                int currentUser = Integer.parseInt(s);
-              //  System.out.println(currentUser);
-                conn = DatabaseConnection.getConnection();
+        try {
+            int currentUser = Integer.parseInt(s);
+            //  System.out.println(currentUser);
+            conn = DatabaseConnection.getConnection();
 
-                PreparedStatement stmt = conn.prepareStatement("SELECT * from user where id = ?");
-                stmt.setInt(1, currentUser);
-                ResultSet result = stmt.executeQuery();
-                if (result.next()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * from user where id = ?");
+            stmt.setInt(1, currentUser);
+            ResultSet result = stmt.executeQuery();
+            if (result.next()) {
     %>
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-lg-4 item"
-                 style="background-color: white; margin-top: 70px; border: 1px solid white; border-radius: 5px; box-shadow: 0 0 2px #9f9f9f; max-height: 430px">
+                 style="background-color: white; margin-top: 70px; border: 1px solid white; border-radius: 5px; box-shadow: 0 0 2px #9f9f9f; max-height: 510px">
                 <div class="box" style="margin-top: 15px"><img class="rounded-circle" src="assets/cnh.png"
                                                                style="width: 200px; margin-left: 20%; margin-top: 10px; margin-bottom: 15px">
                     <h3 class="name" style="text-align: center"><%=result.getString("name")%>
@@ -107,7 +107,21 @@
                         }
                     %>
                 </div>
+                <p align="center">
+                    <button type="button" class="btn btn-success" style="background-color: #7abaff; border: none"
+                            data-toggle="modal" data-target="#myModal">Update Profile
+                    </button>
+
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+                        proident.
+                    </div>
+                </div>
             </div>
+
 
             <div class="col-md-6 col-lg-4 item"></div>
             <div class="col-md-6 col-lg-4 item" style="margin-top: 60px; max-height:100vh; overflow-y: auto;">
@@ -132,7 +146,6 @@
                             <h6 class="text-muted card-subtitle mb-2 text-center"><%=historyResult.getString("address") + ", " + historyResult.getString("state") + ", "
                                     + historyResult.getString("country")%>
                             </h6>
-
                             <p class="card-text text-center" style="margin-top: 30px">
                                 Check-in: <%=historyResult.getString("check_in")%>
                             </p>
@@ -158,5 +171,107 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <%
+        try {
+            int currentUser = Integer.parseInt(s);
+            conn = DatabaseConnection.getConnection();
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * from user where id = ?");
+            stmt.setInt(1, currentUser);
+            ResultSet result = stmt.executeQuery();
+            if (result.next()) {
+    %>
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Profile</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form id="profileUpdateForm">
+
+                    <div class="form-group">
+                        <label>Full Name: </label>
+                        <input type="text" class="form-control" value="<%=result.getString("name")%>">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Email</label>
+                            <input type="email" class="form-control" id="inputEmail4" placeholder="Email"
+                                   value="<%=result.getString("email")%>">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Phone: </label>
+                            <input type="text" class="form-control" id="phone" value="<%=result.getString("phone")%>">
+                        </div>
+                    </div>
+
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label>Street Address: </label>
+                            <input type="text" class="form-control" value="<%=result.getString("address")%>">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label>State: </label>
+                            <input type="text" class="form-control" value="<%=result.getString("state")%>">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label>Country: </label>
+                            <input type="text" class="form-control" value="<%=result.getString("country")%>">
+                        </div>
+                    </div>
+                    <p class="text-center">
+                        <button class="btn btn-primary" type="submit"
+                                style="background-color: #7abaff; min-width: 100px; border: none">Save
+                        </button>
+                    </p>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-default" id="enableEdit"
+                        style="border: .5px solid grey; min-width: 100px"> Edit
+                </button>
+                <button type="button" class="btn btn-default" style="border: .5px solid grey; min-width: 100px" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+
+    <%
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    %>
+</div>
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        $("#profileUpdateForm :input").prop("disabled", true);
+        $("#enableEdit").click(function () {
+            $("#profileUpdateForm :input").prop("disabled", false);
+        });
+    });
+    $('html').click(function() {
+        $("#profileUpdateForm :input").prop("disabled", true);
+        $("#enableEdit").click(function () {
+            event.stopPropagation();
+        });
+    });
+</script>
