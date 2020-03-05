@@ -44,7 +44,7 @@
                     class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.jsp">Home</a></li>
 
                     <li class="dropdown nav-item"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
                                                      aria-expanded="false" href="#">Become a Host</a>
@@ -70,6 +70,7 @@
         </div>
     </nav>
 </div>
+
 <div>
     <div class="container">
         <div class="row">
@@ -77,12 +78,13 @@
                 <div class="contact-clean">
                     <form method="get" action="search.jsp?">
                         <h2 class="text-center">Find a place to stay</h2>
+                        <p class="text-center text-danger" name="error"> ${noDateMsg} </p>
                         <div class="form-group"><input required class="form-control" type="text" name="key"
-                                                       placeholder="Search For a Place"></div>
-                        <div class="form-group"><input required class="form-control" type="text" id="cinDate"
+                                                       placeholder="Search For a Place" value="${defName}"></div>
+                        <div class="form-group"><input pattern="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))" required class="form-control" type="text" id="cinDate"
                                                        autocomplete="off"
                                                        name="cinDate" placeholder="Check-in Date"></div>
-                        <div class="form-group"><input required class="form-control" type="text" id="coutDate"
+                        <div class="form-group"><input required pattern="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))" class="form-control" type="text" id="coutDate"
                                                        autocomplete="off"
                                                        name="coutDate" placeholder="Check-out Date"></div>
                         <div class="form-group"><input required class="form-control" type="number" name="guestCount"
@@ -148,7 +150,7 @@
                         <div class="card-body">
                             <a href="confirmBooking.jsp?placeID=<%=result.getString("id")%>"
                                class="card-link">
-                                <Button class="btn btn-secondary" style="min-width: 100%"><%=result.getString("price")%> /
+                                <Button class="btn btn-primary" style="min-width: 100%; background-color: #7abaff"><%=result.getString("price")%> /
                                     Night
                                 </Button>
                             </a>
@@ -167,6 +169,7 @@
 </body>
 
 </html>
+
 <%@include  file="assets/footer.jsp"%>
 
 <script type="text/javascript">

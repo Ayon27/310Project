@@ -1,4 +1,7 @@
-<%--
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="com.DB.DatabaseConnection" %>
+<%@ page import="java.sql.PreparedStatement" %><%--
   Created by IntelliJ IDEA.
   User: Ayn
   Date: 3/5/2020
@@ -6,6 +9,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% int placeID = Integer.parseInt(request.getParameter("placeID"));
+    String checkIn = request.getParameter("checkIN");
+    String checkOut = request.getParameter("checkOut");
+%>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,11 +22,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="assets/css/animate.css" />
-    <link rel="stylesheet" href="assets/css/owl.carousel.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="assets/css/animate.css"/>
+    <link rel="stylesheet" href="assets/css/owl.carousel.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <title>Confirm Booking</title>
 </head>
 
 <body>
@@ -25,7 +35,7 @@
     <nav class="navbar navbar-light navbar-expand-md navigation-clean">
         <div class="container">
             <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span
-                    class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                    class="sr-only"></span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="index.jsp">Home</a></li>
@@ -39,7 +49,8 @@
 
                     <li class="nav-item" role="presentation"></li>
                     <li class="dropdown nav-item"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
-                                                     aria-expanded="false" href="#"><% out.print(session.getAttribute("name")); %></a>
+                                                     aria-expanded="false"
+                                                     href="#"><% out.print(session.getAttribute("name")); %></a>
                         <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
                                                                   href="#">Profile</a>
                             <a class="dropdown-item" role="presentation" href="logout.jsp">Log
@@ -50,100 +61,133 @@
         </div>
     </nav>
 </div>
+<%
+    String s = (String) session.getAttribute("id");
 
+    try {
+        Connection conn = DatabaseConnection.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * from listing where id =?");
+        stmt.setInt(1, placeID);
+        ResultSet result = stmt.executeQuery();
+        while (result.next()) {
+            String gym = "No Gym";
+            String pool = "No Pool";
+            String entireHouse = "Shared Place";
+
+            if (result.getString("entire_house").equals("1")) {
+                entireHouse = "Entire Place";
+            }
+            if (result.getString("has_gym").equals("1")) {
+                gym = "Has a Gym";
+            }
+            if (result.getString("has_pool").equals("1")) {
+                pool = "Has a Pool";
+            }
+%>
 <section class="page-section">
     <div class="container" style="margin-top: 30px">
         <div class="row">
-            <div class="col-lg-10">
-                <div class="single-list-slider owl-carousel" id="sl-slider">
-                    <div class="sl-item set-bg">
-                        <img class="img-responsive" src="assets/background.jpg" alt="">
-                    </div>
-                </div>
-                <div class>
-                </div>
-                <div class="single-list-content">
-                    <div class="row">
-                        <div class="col-xl-8 sl-title">
-                            <h2>
-                                Demo House 2
-                            </h2>
-                            <p>
-                                Chatteswary Street
-                                <h10>,</h10>
-                                Mehdibag
-                                <h10>,</h10>
-                                Chittagong
-                            </p>
-                        </div>
-                        <div class="col-xl-4">
-                            </a>
+
+            <form class="form-control" method="post" action="confirmed" style="border: 0">
+                <div class="col-lg-10">
+                    <div class="single-list-slider owl-carousel" id="sl-slider">
+                        <div class="sl-item set-bg">
+                            <img class="img-responsive" src="assets/background.jpg" alt="">
                         </div>
                     </div>
-                    <h3 class="sl-sp-title">Property Details</h3>
-                    <div class="row property-details-list">
-                        <div class="col-md-4 col-sm-6">
-                            <p></i>
-                                2000
-                                <h10> sqft</h10>
-                            </p>
-                            <p></i>
-                                4
-                                <h10> Bedroom(s)</h10>
-                            </p>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <p></i>
-                                <h10>Balcony:</h10>
-                                2
-                            </p>
-                            <p></i>
-                                <h10>Owner:</h10>
-                                Rahimm
-                            </p>
-                        </div>
-                        <div class="col-md-4">
-                            <p></i>
-                                <h10>Washroom:</h10>
-                                3
-                            </p>
-                        </div>
-                    </div>
-                    <h3 class="sl-sp-title bd-no"></h3>
-                    <div id="accordion" class="plan-accordion">
-                        <div class="panel">
-                            <div class="panel-header" id="headingOne">
-                                <button class="panel-link active" data-toggle="collapse" data-target="#collapse1"
-                                        aria-expanded="false" aria-controls="collapse1"><i class=""></i></button>
-                            </div>
-                            <div id="collapse1" class="collapse show" aria-labelledby="headingOne"
-                                 data-parent="#accordion">
-                                <div class="panel-body">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel">
-                            <div class="panel-header" id="headingTwo">
-                            </div>
-                            <div id="collapse2" class="collapse" aria-labelledby="headingTwo"
-                                 data-parent="#accordion">
-                                <div class="panel-body">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel">
-                            <div class="panel-header" id="headingThree">
-                            </div>
-                            <div id="collapse3" class="collapse" aria-labelledby="headingThree"
-                                 data-parent="#accordion">
-                                <div class="panel-body">
-                                </div>
-                            </div>
-                        </div>
+                    <div class>
                     </div>
 
-                </div>
-            </div>
+                    <div class="single-list-content">
+
+                        <div class="row">
+                            <div class="col-xl-8 sl-title">
+                                <h2>
+                                    <%=result.getString("name")%>
+                                </h2>
+                                <p>
+                                    <%=result.getString("address")%>
+                                    <h10>,</h10>
+                                    <%=result.getString("state")%>
+                                    <h10>,</h10>
+                                    <%=result.getString("country")%>
+                                </p>
+                            </div>
+                            <div class="col-xl-4">
+                            </div>
+                        </div>
+
+                        <h3 class="sl-sp-title">Details</h3>
+                        <div class="row property-details-list">
+                            <div class="col-md-4 col-sm-6">
+                                <p>
+                                    <%=entireHouse%>
+                                </p>
+                                <p>Rooms:
+                                    <%=result.getString("bedrooms")%>
+                                </p>
+                                <p>Rent:
+                                    <%=result.getString("price")%> / Night
+                                </p>
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <p>
+                                    <%=gym%>
+                                </p>
+                                <p>
+                                    Washrooms:
+                                    <%=result.getString("washrooms")%>
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>
+                                    <%=pool%>
+                                </p>
+                                <p>
+                                    Host:
+                                    <%=result.getString("hostName")%>
+                                </p>
+                            </div>
+                        </div>
+                        <h3 class="sl-sp-title bd-no"></h3>
+                        <div id="accordion" class="plan-accordion">
+                            <div class="panel">
+                                <div class="panel-header" id="headingOne">
+                                    <button style="background-color: #7abaff" class="panel-link active"
+                                            data-toggle="collapse" data-target="#confirmMsg" role="button"
+                                            aria-expanded="false" aria-controls="confirm"><b
+                                            style="margin-left: 45%; font-size: 24px">Book</b></button>
+                                </div>
+
+                                <div class="collapse" id="confirmMsg">
+                                    <div class="card card-body">
+                                        <p class="text-center" style="font-size: 24px"> Are you sure?
+                                            <input type="hidden" name="placeID" value="<%=placeID%>">
+                                            <input type="hidden" name="checkIn" value="<%=checkIn%>">
+                                            <input type="hidden" name="checkOut" value="<%=checkOut%>">
+                                            <button class="btn btn-success"
+                                                    style="margin-left: 10px; background-color: #7abaff;" type="submit">
+                                                Yes, Book now
+                                            </button>
+                                            <button class="btn btn-success" data-toggle="collapse"
+                                                    data-target="#confirmMsg"
+                                                    style="margin-left: 10px; background-color: #7abaff; min-width: 60px">
+                                                No
+                                            </button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <%
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    %>
+            </form>
+        </div>
+    </div>
 
 </section>
 

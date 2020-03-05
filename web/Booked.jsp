@@ -1,6 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
   User: Ayn
+  Date: 3/5/2020
+  Time: 6:37 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: Ayn
   Date: 3/4/2020
   Time: 4:08 AM
   To change this template use File | Settings | File Templates.
@@ -10,8 +18,6 @@
         response.sendRedirect("login.jsp");
     }
 %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 
 <!DOCTYPE html>
 <html>
@@ -19,7 +25,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Successful</title>
+    <title>Booked</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/Highlight-Clean.css">
     <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
@@ -50,8 +56,8 @@
                                                      href="#"><% out.print(session.getAttribute("name")); %></a>
                         <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
                                                                   href="#">Profile</a><a class="dropdown-item"
-                                                                                            role="presentation"
-                                                                                            href="logout.jsp">Log
+                                                                                         role="presentation"
+                                                                                         href="logout.jsp">Log
                             out</a>
                     </li>
                 </ul>
@@ -63,7 +69,7 @@
     <div class="container" style="margin-top: 100px">
         <div class="intro">
             <h2 class="text-center">Congratulations!</h2>
-            <p class="text-center">Your place Has Been Successfully Added!</p>
+            <p class="text-center">Your Booking has Been confirmed.</p>
         </div>
         <div class="buttons"><a class="btn btn-primary" role="button" href="mylisting.jsp">Back to My Listings</a></div>
     </div>

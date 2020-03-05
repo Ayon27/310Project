@@ -16,6 +16,7 @@
 %>
 
 <% String key = request.getParameter("key");
+    key = key.trim();
     String checkIn = request.getParameter("cinDate");
     String checkOut = request.getParameter("coutDate");
     int guestCount = Integer.parseInt(request.getParameter("guestCount"));
@@ -77,13 +78,15 @@
         try {
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * from listing WHERE id NOT IN (SELECT listing_id from booking WHERE check_in <= ? AND check_out >= ?)" +
-                    " AND (country LIKE ? OR state LIKE ? OR address LIKE ?) AND (guests >= ?)");
+                    " AND (country LIKE ? OR state LIKE ? OR address LIKE ? OR name LIKE ?) AND (guests >= ?)");
             stmt.setString(1, checkOut);
             stmt.setString(2, checkIn);
             stmt.setString(3, "%" + key + "%");
             stmt.setString(4, "%" + key + "%");
             stmt.setString(5, "%" + key + "%");
-            stmt.setInt(6, guestCount);
+            stmt.setString(6, "%" + key + "%");
+            stmt.setInt(7, guestCount);
+
             ResultSet result = stmt.executeQuery();
 
     %>
@@ -124,16 +127,19 @@
                 pool = "Has a Pool";
             }
     %>
-    <a style="text-decoration: none; color: black" href="confirmBooking.jsp?placeID=<%=result.getString("id")%>">
+    <a style="text-decoration: none; color: black"
+       href="confirmBooking.jsp?placeID=<%=result.getString("id")%>&checkIN=<%=checkIn%>&checkOut=<%=checkOut%>">
         <div class="card" style="margin-top: 30px; margin-bottom: 100px">
             <div class="card-body">
                 <img class="card-img-top" src="assets/download.png" alt="Card image cap"
-                     style="width: 150px; margin-top: 50px; margin-left: 20px" align="left">
+                     style="width: 150px; margin-top: 68px; margin-left: 20px" align="left">
 
                 <div class='pt-4'></div>
 
                 <h4 class="card-title text-center"><%=result.getString("name")%>
                 </h4>
+                <h6 class="card-title text-center"><%=result.getString("address") + ", " + result.getString("state") + ", " + result.getString("country")%>
+                </h6>
 
                 <p class="card-text text-center"><%=entireHouse + ", " + gym + ", " + pool%>
                 </p>

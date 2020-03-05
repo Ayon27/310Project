@@ -12,4 +12,8 @@
         <servlet-name>Finalize</servlet-name>
         <servlet-class>com.addPlace.Finalize</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>confirmed</servlet-name>
+        <servlet-class>com.confimBooking.confirmed</servlet-class>
+    </servlet>
 </web-app>
