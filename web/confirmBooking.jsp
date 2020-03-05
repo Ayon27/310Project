@@ -169,7 +169,7 @@
                                                     style="margin-left: 10px; background-color: #7abaff;" type="submit">
                                                 Yes, Book now
                                             </button>
-                                            <button class="btn btn-success" data-toggle="collapse"
+                                            <button type="button" class="btn btn-success" data-toggle="collapse"
                                                     data-target="#confirmMsg"
                                                     style="margin-left: 10px; background-color: #7abaff; min-width: 60px">
                                                 No
