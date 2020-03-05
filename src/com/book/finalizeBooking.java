@@ -4,6 +4,7 @@ import com.DB.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class finalizeBooking<T> {
     private T placeID;
@@ -25,7 +26,8 @@ public class finalizeBooking<T> {
 
     }
 
-    public void book() {
+    public int book() {
+        int bookingID = 0;
         try {
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("insert into booking (check_in, check_out, user_id, listing_id) values (?, ?, ?, ?)");
@@ -35,9 +37,17 @@ public class finalizeBooking<T> {
             stmt.setInt(4, (Integer) placeID);
 
             stmt.executeUpdate();
+
+            PreparedStatement stmt1 = conn.prepareStatement("select max(booking_id) as maxid from booking");
+            ResultSet resultSet = stmt1.executeQuery();
+            if (resultSet.next()) {
+                bookingID = resultSet.getInt("maxid");
+            }
+
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return bookingID;
     }
 }

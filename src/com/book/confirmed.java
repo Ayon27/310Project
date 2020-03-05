@@ -25,9 +25,11 @@ public class confirmed extends HttpServlet {
             finalizeBooking<Integer> fb = new finalizeBooking<>(checkIn, checkOut, 33);
             fb.setPlaceID(Integer.parseInt(placeID));
             fb.setUserID(s);
-            fb.book();
+            int bookingID = fb.book();
 
-            response.sendRedirect("");
+            session.setAttribute("bookingID", "");
+            String url = "Booked.jsp?bookingID="+bookingID;
+            response.sendRedirect(url);
         } else {
             request.setAttribute("noDateMsg", "Please Enter Dates to check availability");
             redir r = new redir();

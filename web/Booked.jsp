@@ -1,4 +1,8 @@
-<%--
+<%@ page import="java.sql.Connection" %>
+<%@ page import="com.DB.DatabaseConnection" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="javax.xml.transform.Result" %><%--
   Created by IntelliJ IDEA.
   User: Ayn
   Date: 3/5/2020
@@ -17,6 +21,7 @@
     if (session.getAttribute("name") == null) {
         response.sendRedirect("login.jsp");
     }
+    int bookingID = Integer.parseInt(request.getParameter("bookingID"));
 %>
 
 <!DOCTYPE html>
@@ -68,12 +73,42 @@
 <div class="highlight-clean">
     <div class="container" style="margin-top: 100px">
         <div class="intro">
+
+            <%
+                int placeID = 0;
+                try {
+                    Connection conn = DatabaseConnection.getConnection();
+                    PreparedStatement stmt = conn.prepareStatement("SELECT * from booking WHERE booking_id =?");
+                    stmt.setInt(1, bookingID);
+                    ResultSet result = stmt.executeQuery();
+
+                    if (result.next()) {
+                        placeID = result.getInt("listing_id");
+                        result.beforeFirst();
+                    }
+                    PreparedStatement stmt1 = conn.prepareStatement("SELECT * from listing WHERE id =?");
+                    stmt1.setInt(1, placeID);
+                    ResultSet resultFromListing = stmt1.executeQuery();
+                    if (resultFromListing.next()) {
+            %>
             <h2 class="text-center">Congratulations!</h2>
             <p class="text-center">Your Booking has Been confirmed.</p>
+            <p class="text-center">Booking #<%=bookingID%></p>
+
+            <h5 style="margin-top: 70px " class="text-center"><%=resultFromListing.getString("name")%></h5>
+            <p class="text-center"><%=resultFromListing.getString("address")%>
+                , <%=resultFromListing.getString("state")%>
+                , <%=resultFromListing.getString("country")%></p>
         </div>
         <div class="buttons"><a class="btn btn-primary" role="button" href="mylisting.jsp">Back to My Listings</a></div>
     </div>
 </div>
+<%
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+%>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
