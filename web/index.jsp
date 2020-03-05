@@ -161,7 +161,7 @@
                     <%
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                                e.getStackTrace()[0].getLineNumber();
                         }
                     %>
                 </div>

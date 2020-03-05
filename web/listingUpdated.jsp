@@ -75,7 +75,6 @@
         <div class="buttons"><a class="btn btn-primary" role="button" href="mylisting.jsp">Back to My Listings</a></div>
     </div>
 </div>
-<%@include  file="assets/footer.jsp"%>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>

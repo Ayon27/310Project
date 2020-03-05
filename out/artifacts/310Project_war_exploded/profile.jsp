@@ -75,18 +75,15 @@
     <%
         String s = (String) session.getAttribute("id");
 
-        try {
-            int currentUser = 0;
             try {
-                currentUser = Integer.parseInt(s);
+                int currentUser = Integer.parseInt(s);
+              //  System.out.println(currentUser);
                 conn = DatabaseConnection.getConnection();
-            } catch (NumberFormatException n) {
-                response.getWriter().print("yy");
-            }
-            PreparedStatement stmt = conn.prepareStatement("SELECT * from user where id = ?");
-            stmt.setInt(1, currentUser);
-            ResultSet result = stmt.executeQuery();
-            if (result.next()) {
+
+                PreparedStatement stmt = conn.prepareStatement("SELECT * from user where id = ?");
+                stmt.setInt(1, currentUser);
+                ResultSet result = stmt.executeQuery();
+                if (result.next()) {
     %>
     <div class="container">
         <div class="row">
@@ -149,21 +146,17 @@
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {
-
-                        if (conn != null) {
-                            try {
-                                conn.close();
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
+                        try {
+                            assert conn != null;
+                            conn.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                         }
                     }
                 %>
             </div>
         </div>
     </div>
-</div>
-
 </div>
 </body>
 </html>

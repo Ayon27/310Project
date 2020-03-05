@@ -1,4 +1,8 @@
-<%--
+<%@ page import="com.DB.DatabaseConnection" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.SQLException" %><%--
   Created by IntelliJ IDEA.
   User: Ayn
   Date: 3/4/2020
@@ -14,6 +18,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% String place_id = request.getParameter("id");
     String place_name = request.getParameter("name");
+    Connection conn = null;
 %>
 
 <html>
@@ -37,6 +42,7 @@
 </head>
 <body>
 <div>
+
     <nav class="navbar navbar-light navbar-expand-md navigation-clean" style="margin-top: 20px">
         <div class="container">
             <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span
@@ -72,41 +78,51 @@
 
 <div>
     <div class="container">
-        <h2 class="text-center" style="margin-top: 30px; margin-bottom: 20px">Update Information of <strong><%=place_name%></strong>
+        <h2 class="text-center" style="margin-top: 30px; margin-bottom: 20px">Update Information of
+            <strong><%=place_name%>
+            </strong>
         </h2>
         <div class="row">
-            <div class="col-md-4">     </div>
+            <div class="col-md-4"></div>
             <div class="col-md-4">
+                <%
+                    try {
+                        int id = Integer.parseInt(place_id);
+                        conn = DatabaseConnection.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM listing WHERE id = ?");
+                        stmt.setInt(1, id);
+                        ResultSet result = stmt.executeQuery();
+                        if (result.next()) {
+                %>
                 <p class="text-center text-danger" name="error">${updateError}</p>
-
                 <form method="POST" action="UpdateListing">
                     <div class="form-group">
                         <label style="margin-top: 20px;">
                             <input type="hidden" name="id" value="<%=place_id%>">
                             Change Name:
                         </label><input required name="name" class="form-control" placeholder="" type="text"
-                                       pattern="[A-Za-z\s]+">
+                                       pattern="[A-Za-z\s]+" value="<%=result.getString("name")%>">
                     </div>
 
                     <div class="form-group">
                         <label style="margin-top: 20px;">
                             Number of Bedrooms:
                         </label><input required name="bedroom" class="form-control" placeholder="" type="number"
-                                       min="1">
+                                       min="1" value="<%=result.getString("bedrooms")%>">
                     </div>
 
                     <div class="form-group">
                         <label style="margin-top: 20px;">
                             Number of washrooms:
                         </label>
-                        <input required name="washroom" class="form-control" placeholder="" type="number" min="1">
+                        <input required name="washroom" class="form-control" placeholder="" type="number" min="1" value="<%=result.getString("washrooms")%>">
                     </div>
 
                     <div class="form-group">
                         <label style="margin-top: 20px;">
                             How many guests can stay?
                         </label>
-                        <input required name="guests" class="form-control" type="number" min="1">
+                        <input required name="guests" class="form-control" type="number" min="1" value="<%=result.getString("guests")%>">
                     </div>
 
                     <div class="form-group">
@@ -122,16 +138,21 @@
                         <label style="margin-top: 20px;">
                             Street Address:
                         </label>
-                        <input required name="address" class="form-control" type="text">
+                        <input required name="address" class="form-control" type="text" value="<%=result.getString("address")%>">
                     </div>
 
                     <div class="form-group">
                         <label style="margin-top: 20px;">
                             Price for one night stay:
                         </label>
-                        <input required name="price" class="form-control" type="number" step="0.01" min="0">
+                        <input required name="price" class="form-control" type="number" step="0.01" min="0" value="<%=result.getString("price")%>">
                     </div>
-
+                        <%
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            %>
 
             </div>
         </div>
@@ -139,7 +160,7 @@
             <div class="btn-group" role="group"></div>
             <button class="btn btn-primary" type="submit"
                     style="margin-top: 20px; min-width: 120px;min-height: 40px; margin-left: 45%; margin-top: 30px; margin-bottom: 50px;">
-                Finish
+                Save
             </button>
         </div>
         </form>
@@ -148,6 +169,6 @@
     <div class="col-md-4">
     </div>
 </div>
-<%@include  file="assets/footer.jsp"%>
+<%@include file="assets/footer.jsp" %>
 </body>
 </html>

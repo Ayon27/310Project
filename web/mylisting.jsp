@@ -57,7 +57,7 @@
                                role="presentation"
                                href="logout.jsp">Log
                                 out</a>
-                    </li>
+                    </li`>
                 </ul>
             </div>
         </div>
