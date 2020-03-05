@@ -105,10 +105,10 @@
             </ul>
             <div class="card-body">
                 <a href="modifyListing.jsp?id=<%=result.getString("id")%>&name=<%=result.getString("name")%>" class="card-link">
-                    <Button class="btn btn-success" style="min-width: 45%"> UPDATE</Button>
+                    <Button class="btn btn-primary" style="background-color: #7abaff; min-width: 45%"> UPDATE</Button>
                 </a>
                 <a href="deleteListing.jsp?id=<%=result.getString("id")%>&name=<%=result.getString("name")%>" class="card-link">
-                    <Button style="min-width: 45%" class="btn btn-primary"> DELETE</Button>
+                    <Button style="min-width: 45%; background-color: #7abaff" class="btn btn-primary"> DELETE</Button>
                 </a>
 
             </div>

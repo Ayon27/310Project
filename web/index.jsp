@@ -148,7 +148,7 @@
                         <div class="card-body">
                             <a href="confirmBooking.jsp?placeID=<%=result.getString("id")%>"
                                class="card-link">
-                                <Button class="btn btn-secondary" style="min-width: 100%"><%=result.getString("price")%> /
+                                <Button class="btn btn-primary" style="min-width: 100%; background-color: #7abaff"><%=result.getString("price")%> /
                                     Night
                                 </Button>
                             </a>
