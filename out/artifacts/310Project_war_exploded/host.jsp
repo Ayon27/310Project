@@ -38,7 +38,7 @@
                     <li class="dropdown nav-item"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
                                                      aria-expanded="false" href="#"><% out.print(session.getAttribute("name")); %></a>
                         <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                                                  href="#">Profile</a><a class="dropdown-item" role="presentation"
+                                                                  href="profile.jsp">Profile</a><a class="dropdown-item" role="presentation"
                                                                                             href="logout.jsp">Log
                             out</a>
                     </li>

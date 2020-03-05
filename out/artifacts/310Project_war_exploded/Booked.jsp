@@ -37,7 +37,8 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
-<body>
+<body style="min-height: 100%">
+<div class="container" style="min-height: 100%">
 <div style="margin-top: 20px">
     <nav class="navbar navbar-light navbar-expand-md navigation-clean">
         <div class="container">
@@ -60,7 +61,7 @@
                                                      aria-expanded="false"
                                                      href="#"><% out.print(session.getAttribute("name")); %></a>
                         <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                                                  href="#">Profile</a><a class="dropdown-item"
+                                                                  href="profile.jsp">Profile</a><a class="dropdown-item"
                                                                                          role="presentation"
                                                                                          href="logout.jsp">Log
                             out</a>
@@ -96,11 +97,12 @@
             <p class="text-center">Booking #<%=bookingID%></p>
 
             <h5 style="margin-top: 70px " class="text-center"><%=resultFromListing.getString("name")%></h5>
+            <p class="text-center">Host: <%=resultFromListing.getString("hostName")%></p>
+
             <p class="text-center"><%=resultFromListing.getString("address")%>
                 , <%=resultFromListing.getString("state")%>
                 , <%=resultFromListing.getString("country")%></p>
         </div>
-        <div class="buttons"><a class="btn btn-primary" role="button" href="mylisting.jsp">Back to My Listings</a></div>
     </div>
 </div>
 <%
@@ -109,6 +111,7 @@
         e.printStackTrace();
     }
 %>
+</div>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>

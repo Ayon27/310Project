@@ -58,7 +58,7 @@
                                                      aria-expanded="false"
                                                      href="#"><% out.print(session.getAttribute("name")); %></a>
                         <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                                                  href="#">Profile</a>
+                                                                  href="profile.jsp">Profile</a>
                             <a class="dropdown-item"
                                role="presentation"
                                href="logout.jsp">Log
@@ -78,7 +78,7 @@
         try {
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * from listing WHERE id NOT IN (SELECT listing_id from booking WHERE check_in <= ? AND check_out >= ?)" +
-                    " AND (country LIKE ? OR state LIKE ? OR address LIKE ? OR name LIKE ?) AND (guests >= ?)");
+                    " AND (country LIKE ? OR state LIKE ? OR address LIKE ? OR name LIKE ?) AND (guests >= ?) AND (host_id !=?)");
             stmt.setString(1, checkOut);
             stmt.setString(2, checkIn);
             stmt.setString(3, "%" + key + "%");
@@ -86,6 +86,8 @@
             stmt.setString(5, "%" + key + "%");
             stmt.setString(6, "%" + key + "%");
             stmt.setInt(7, guestCount);
+            stmt.setInt(8, id);
+
 
             ResultSet result = stmt.executeQuery();
 

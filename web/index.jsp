@@ -59,7 +59,7 @@
                                                      aria-expanded="false"
                                                      href="#"><% out.print(session.getAttribute("name")); %></a>
                         <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                                                  href="#">Profile</a>
+                                                                  href="profile.jsp">Profile</a>
                             <a class="dropdown-item"
                                role="presentation"
                                href="logout.jsp">Log
@@ -106,8 +106,10 @@
                         String s = (String) session.getAttribute("id");
 
                         try {
+                            int currentUser = Integer.parseInt(s);
                             Connection conn = DatabaseConnection.getConnection();
-                            PreparedStatement stmt = conn.prepareStatement("SELECT * from listing ORDER BY RAND() LIMIT 6");
+                            PreparedStatement stmt = conn.prepareStatement("SELECT * from listing where host_id !=? ORDER BY RAND() LIMIT 6");
+                            stmt.setInt(1, currentUser);
                             ResultSet result = stmt.executeQuery();
                             while (result.next()) {
                                 String gym = "No Gym";
