@@ -10,7 +10,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if (session.getAttribute("name") == null) {
+    if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
         response.sendRedirect("login.jsp");
     }
 %>
@@ -178,7 +178,8 @@
     $("#cinDate").datepicker({
         autoClose: true,
         dateFormat: 'yy-mm-dd',
-        minDate: new Date(),
+        minDate: "0",
+        maxDate: "+4m",
         onSelect: function (dateStr) {
             var min = $(this).datepicker('getDate');
             var minDate = new Date();
@@ -191,6 +192,7 @@
         minDate: '0',
         dateFormat: 'yy-mm-dd',
         autoClose: true,
+        maxDate: "+4m",
     });
 </script>
 

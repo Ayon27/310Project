@@ -1,28 +1,60 @@
 package com.update;
 
-import com.reg.regCheck;
 import com.DB.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import com.hash.hashPassword;
+import java.sql.SQLException;
 
 public class Update {
-    private String state;
-    private String address;
+    private String name;
+    private String email;
     private String phone;
-    private String hashedPass;
+    private String address;
+    private String state;
+    private String country;
 
-    public Update() {}
+    private int userid = 0;
 
-    public Update(String st, String add, String nmbr, String password) {
-        state = st;
-        address = add;
-        phone = nmbr;
-        hashedPass = new hashPassword(password).hash();
+    public Update() {
     }
 
-    public void execute() {
+    public void setuserID(String s) {
+        userid = Integer.parseInt(s);
+    }
 
+    public Update(String nm, String email, String phn, String add, String st, String cntry) {
+        name = nm;
+        this.email = email;
+        phone = phn;
+        address = add;
+        state = st;
+        country = cntry;
+    }
+
+    public void insert() {
+        Connection conn = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("update user set name = ?, email = ?,  phone = ?, address = ?, state = ?, country = ? where id = ?");
+            stmt.setString(1, name);
+            stmt.setString(2, email);
+            stmt.setString(3, phone);
+            stmt.setString(4, address);
+            stmt.setString(5, state);
+            stmt.setString(6, country);
+            stmt.setInt(7, userid);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
     }
 }

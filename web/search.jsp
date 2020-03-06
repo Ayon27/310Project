@@ -1,6 +1,6 @@
+<%@ page import="com.DB.DatabaseConnection" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.PreparedStatement" %>
-<%@ page import="com.DB.DatabaseConnection" %>
 <%@ page import="java.sql.ResultSet" %><%--
   Created by IntelliJ IDEA.
   User: Ayn
@@ -11,7 +11,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<% String key = request.getParameter("key");
+<% if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
+    response.sendRedirect("login.jsp");
+}
+
+    String key = request.getParameter("key");
     key = key.trim();
     String checkIn = request.getParameter("cinDate");
     String checkOut = request.getParameter("coutDate");

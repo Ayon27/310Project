@@ -35,6 +35,7 @@
         </div>
     </nav>
 </div>
+
 <div class="register-photo">
     <div class="form-container">
         <form method="post" action="Register" onsubmit="return checkPass()">

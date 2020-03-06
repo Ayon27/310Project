@@ -7,13 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
-
-import com.DB.DatabaseConnection;
-
-import com.hash.hashPassword;
 
 
 @WebServlet("/Register")
@@ -26,6 +20,7 @@ public class Register extends HttpServlet {
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
+        email = email.trim();
         String password = request.getParameter("password");
 
         ArrayList<String> errorList = new ArrayList<String>();
@@ -48,7 +43,7 @@ public class Register extends HttpServlet {
             errorList.add("Invalid Country");
         }
 
-        if (!check.nameValid(country)) {
+        if (!check.nameValid(state)) {
             st = false;
             errorList.add("Invalid State");
         }

@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%
-    if (session.getAttribute("name") == null) {
+    if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
         response.sendRedirect("login.jsp");
     }
 %>
@@ -36,10 +36,12 @@
 
                     <li class="nav-item" role="presentation"></li>
                     <li class="dropdown nav-item"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
-                                                     aria-expanded="false" href="#"><% out.print(session.getAttribute("name")); %></a>
+                                                     aria-expanded="false"
+                                                     href="#"><% out.print(session.getAttribute("name")); %></a>
                         <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                                                  href="profile.jsp">Profile</a><a class="dropdown-item" role="presentation"
-                                                                                            href="logout.jsp">Log
+                                                                  href="profile.jsp">Profile</a><a class="dropdown-item"
+                                                                                                   role="presentation"
+                                                                                                   href="logout.jsp">Log
                             out</a>
                     </li>
                 </ul>
@@ -146,14 +148,17 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="btn-group" role="group"></div><button class="btn btn-primary" type="submit"
-                                                              style="margin-top: 20px; min-width: 120px;min-height: 40px; margin-left: 45%; margin-top: 30px; margin-bottom: 50px;">Finish</button>
+            <div class="btn-group" role="group"></div>
+            <button class="btn btn-primary" type="submit"
+                    style="margin-top: 20px; min-width: 120px;min-height: 40px; margin-left: 45%; margin-top: 30px; margin-bottom: 50px;">
+                Finish
+            </button>
         </div>
         </form>
     </div>
 </div>
 
-<%@include  file="assets/footer.jsp"%>
+<%@include file="assets/footer.jsp" %>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>

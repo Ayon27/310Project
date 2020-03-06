@@ -10,7 +10,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%
-    if (session.getAttribute("name") == null) {
+    if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
         response.sendRedirect("login.jsp");
     }
 %>

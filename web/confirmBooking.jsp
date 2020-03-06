@@ -1,7 +1,7 @@
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.ResultSet" %>
 <%@ page import="com.DB.DatabaseConnection" %>
-<%@ page import="java.sql.PreparedStatement" %><%--
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %><%--
   Created by IntelliJ IDEA.
   User: Ayn
   Date: 3/5/2020
@@ -9,7 +9,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% int placeID = Integer.parseInt(request.getParameter("placeID"));
+
+
+<% if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
+    response.sendRedirect("login.jsp");
+}
+
+    int placeID = Integer.parseInt(request.getParameter("placeID"));
     String checkIn = request.getParameter("checkIN");
     String checkOut = request.getParameter("checkOut");
 %>
@@ -153,7 +159,7 @@
                         <div id="accordion" class="plan-accordion">
                             <div class="panel">
                                 <div class="panel-header" id="headingOne">
-                                    <button style="background-color: #7abaff; border: none" class="panel-link active"
+                                    <button style="background-color: #88BDE9; border: none" class="panel-link active"
                                             data-toggle="collapse" data-target="#confirmMsg" role="button"
                                             aria-expanded="false" aria-controls="confirm"><b
                                             style="margin-left: 45%; font-size: 24px">Book</b></button>
@@ -166,7 +172,8 @@
                                             <input type="hidden" name="checkIn" value="<%=checkIn%>">
                                             <input type="hidden" name="checkOut" value="<%=checkOut%>">
                                             <button class="btn btn-success"
-                                                    style="margin-left: 10px; background-color: #7abaff; border: none" type="submit">
+                                                    style="margin-left: 10px; background-color: #7abaff; border: none"
+                                                    type="submit">
                                                 Yes, Book now
                                             </button>
                                             <button type="button" class="btn btn-success" data-toggle="collapse"

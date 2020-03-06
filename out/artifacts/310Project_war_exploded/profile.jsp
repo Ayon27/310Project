@@ -10,7 +10,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%
-    if (session.getAttribute("name") == null) {
+    if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
         response.sendRedirect("login.jsp");
     }
     Connection conn = null;
@@ -25,6 +25,7 @@
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Footer-Dark.css">
     <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
     <link rel="stylesheet" href="assets/css/Highlight-Clean.css">
     <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
@@ -183,31 +184,33 @@
             ResultSet result = stmt.executeQuery();
             if (result.next()) {
     %>
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" id="updateModal">
 
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Update Profile</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" id="closeIcon" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <div class="modal-body">
-                <form id="profileUpdateForm">
 
+                <form id="profileUpdateForm" method="post" action="updateProfile">
                     <div class="form-group">
                         <label>Full Name: </label>
-                        <input type="text" class="form-control" value="<%=result.getString("name")%>">
+                        <input required type="text" name="name" class="form-control" pattern="^(?! )[A-Za-z ]*(?<! )$"
+                               value="<%=result.getString("name")%>" maxlength="40">
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Email</label>
-                            <input type="email" class="form-control" id="inputEmail4" placeholder="Email"
-                                   value="<%=result.getString("email")%>">
+                            <input type="email" name="email" class="form-control" id="inputEmail4" placeholder="Email"
+                                   value="<%=result.getString("email")%>" maxlength="80">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Phone: </label>
-                            <input type="text" class="form-control" id="phone" value="<%=result.getString("phone")%>">
+                            <input required pattern="^(?! )[0-9]*(?<! )$" type="text" name="phone" class="form-control" id="phone"
+                                   value="<%=result.getString("phone")%>" maxlength="20">
                         </div>
                     </div>
 
@@ -215,21 +218,24 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>Street Address: </label>
-                            <input type="text" class="form-control" value="<%=result.getString("address")%>">
+                            <input type="text" name="address" class="form-control"
+                                   value="<%=result.getString("address")%>" maxlength="95">
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>State: </label>
-                            <input type="text" class="form-control" value="<%=result.getString("state")%>">
+                            <input type="text" name="state" class="form-control" value="<%=result.getString("state")%>"
+                                   maxlength="15">
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>Country: </label>
-                            <input type="text" class="form-control" value="<%=result.getString("country")%>">
+                            <input type="text" name="country" class="form-control"
+                                   value="<%=result.getString("country")%>" maxlength="15">
                         </div>
                     </div>
                     <p class="text-center">
-                        <button class="btn btn-primary" type="submit"
+                        <button class="btn btn-primary" id="save" type="submit"
                                 style="background-color: #7abaff; min-width: 100px; border: none">Save
                         </button>
                     </p>
@@ -240,7 +246,9 @@
                 <button class="btn btn-default" id="enableEdit"
                         style="border: .5px solid grey; min-width: 100px"> Edit
                 </button>
-                <button type="button" class="btn btn-default" style="border: .5px solid grey; min-width: 100px" data-dismiss="modal">Close</button>
+                <button type="button" id="close" class="btn btn-default"
+                        style="border: .5px solid grey; min-width: 100px" data-dismiss="modal">Close
+                </button>
             </div>
         </div>
 
@@ -261,6 +269,7 @@
 </body>
 </html>
 
+
 <script>
     $(document).ready(function () {
         $("#profileUpdateForm :input").prop("disabled", true);
@@ -268,10 +277,16 @@
             $("#profileUpdateForm :input").prop("disabled", false);
         });
     });
-    $('html').click(function() {
+    $('html').click(function () {
         $("#profileUpdateForm :input").prop("disabled", true);
         $("#enableEdit").click(function () {
             event.stopPropagation();
         });
+        $("#updateModal").click(function (e) {
+            if ((e.target.id == "close") || (e.target.id == "closeIcon"))
+                return;
+            event.stopPropagation();
+        });
+
     });
 </script>
