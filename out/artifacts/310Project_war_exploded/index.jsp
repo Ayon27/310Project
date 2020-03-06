@@ -178,21 +178,19 @@
     $("#cinDate").datepicker({
         autoClose: true,
         dateFormat: 'yy-mm-dd',
-        minDate: "0",
-        maxDate: "+4m",
-        onSelect: function (dateStr) {
-            var min = $(this).datepicker('getDate');
-            var minDate = new Date();
-            minDate.setDate(min.getDate() + 1);
-            $('#coutDate').datepicker('option', 'minDate', minDate || '0');
+        minDate: new Date(),
+        onSelect: function (dateText, inst) {
+            var min = $.datepicker.parseDate(inst.settings.dateFormat, dateText);
+            min.setDate(min.getDate() + 1);
+            $('#coutDate').datepicker('setDate', min);
+            $('#coutDate').datepicker('option', 'minDate', min);
         }
     });
 
     $('#coutDate').datepicker({
-        minDate: '0',
+        minDate: '+1d',
         dateFormat: 'yy-mm-dd',
         autoClose: true,
-        maxDate: "+4m",
     });
 </script>
 
