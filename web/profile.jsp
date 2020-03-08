@@ -128,12 +128,12 @@
             <div class="col-md-6 col-lg-4 item" style="margin-top: 60px; max-height:100vh; overflow-y: auto;">
                 <h4 class="text-secondary text-center">Your Booking History Will Appear Here</h4>
                 <%
-                    PreparedStatement stmtForHistory = conn.prepareStatement("SELECT bookinghistory.listing_id, bookinghistory.booking_id, bookinghistory.check_in, " +
-                            "bookinghistory.check_out, listing.name," +
+                    PreparedStatement stmtForHistory = conn.prepareStatement("SELECT booking.listing_id, booking.booking_id, booking.check_in, " +
+                            "booking.check_out, listing.name," +
                             " listing.hostName, listing.address, listing.state, listing.country " +
                             "from listing " +
-                            "INNER JOIN bookinghistory on bookinghistory.listing_id = listing.id " +
-                            "WHERE bookinghistory.user_id = ?;");
+                            "INNER JOIN booking on booking.listing_id = listing.id " +
+                            "WHERE booking.user_id = ?;");
                     stmtForHistory.setInt(1, currentUser);
                     ResultSet historyResult = stmtForHistory.executeQuery();
                     while (historyResult.next()) {

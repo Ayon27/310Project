@@ -38,14 +38,6 @@ public class finalizeBooking<T> {
 
             stmt.executeUpdate();
 
-            PreparedStatement stmtForHistory = conn.prepareStatement("insert into bookinghistory (check_in, check_out, user_id, listing_id) values (?, ?, ?, ?)");
-            stmtForHistory.setString(1, checkIn);
-            stmtForHistory.setString(2, checkOut);
-            stmtForHistory.setInt(3, userID);
-            stmtForHistory.setInt(4, (Integer) placeID);
-
-            stmtForHistory.executeUpdate();
-
             PreparedStatement stmt1 = conn.prepareStatement("select max(booking_id) as maxid from booking");
             ResultSet resultSet = stmt1.executeQuery();
             if (resultSet.next()) {
