@@ -11,9 +11,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<% if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
-    response.sendRedirect("login.jsp");
-}
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+
+    if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
+        response.sendRedirect("login.jsp");
+    }
 
     String key = request.getParameter("key");
     key = key.trim();
@@ -77,8 +79,9 @@
 
         try {
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * from listing WHERE id NOT IN (SELECT listing_id from booking WHERE check_in <= ? AND check_out >= ?)" +
-                    " AND (country LIKE ? OR state LIKE ? OR address LIKE ? OR name LIKE ?) AND (guests >= ?) AND (host_id !=?)");
+            PreparedStatement stmt = conn.prepareStatement
+                    ("SELECT * from listing WHERE id NOT IN (SELECT listing_id from booking WHERE check_in <= ? AND check_out >= ?)" +
+                            " AND (country LIKE ? OR state LIKE ? OR address LIKE ? OR name LIKE ?) AND (guests >= ?) AND (host_id !=?)");
             stmt.setString(1, checkOut);
             stmt.setString(2, checkIn);
             stmt.setString(3, "%" + key + "%");
@@ -134,7 +137,7 @@
         <div class="card" style="margin-top: 30px; margin-bottom: 100px">
             <div class="card-body">
                 <img class="card-img-top" src="assets/download.png" alt="Card image cap"
-                     style="width: 150px; margin-top: 68px; margin-left: 20px" align="left">
+                     style="width: 200px; margin-top: 68px; margin-left: 20px" align="left">
 
                 <div class='pt-4'></div>
 
@@ -149,6 +152,8 @@
                     Washrooms: <%=result.getString("washrooms")%>
                 </p>
                 <p class="card-text text-center">Host: <%=result.getString("hostName")%>
+                </p>
+                <p class="card-text text-center"><strong> For: <%=result.getString("guests")%> People </strong>
                 </p>
                 <p class="card-text text-center"><strong><%=result.getString("price")%> / Night </strong></p>
                 <input type="hidden" name="listID" value="<%=result.getString("id")%>">

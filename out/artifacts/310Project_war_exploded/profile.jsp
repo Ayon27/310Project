@@ -9,11 +9,12 @@
   Time: 9:19 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%
-    if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
+<%     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+
+    if ((session.getAttribute("name") == null)) {
         response.sendRedirect("login.jsp");
     }
-    Connection conn = null;
+        Connection conn = null;
 %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -116,9 +117,6 @@
                 </p>
                 <div class="collapse" id="collapseExample">
                     <div class="card card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
-                        proident.
                     </div>
                 </div>
             </div>
@@ -128,12 +126,12 @@
             <div class="col-md-6 col-lg-4 item" style="margin-top: 60px; max-height:100vh; overflow-y: auto;">
                 <h4 class="text-secondary text-center">Your Booking History Will Appear Here</h4>
                 <%
-                    PreparedStatement stmtForHistory = conn.prepareStatement("SELECT bookinghistory.listing_id, bookinghistory.booking_id, bookinghistory.check_in, " +
-                            "bookinghistory.check_out, listing.name," +
+                    PreparedStatement stmtForHistory = conn.prepareStatement("SELECT booking.listing_id, booking.booking_id, booking.check_in, " +
+                            "booking.check_out, listing.name," +
                             " listing.hostName, listing.address, listing.state, listing.country " +
                             "from listing " +
-                            "INNER JOIN bookinghistory on bookinghistory.listing_id = listing.id " +
-                            "WHERE bookinghistory.user_id = ?;");
+                            "INNER JOIN booking on booking.listing_id = listing.id " +
+                            "WHERE booking.user_id = ?;");
                     stmtForHistory.setInt(1, currentUser);
                     ResultSet historyResult = stmtForHistory.executeQuery();
                     while (historyResult.next()) {
@@ -142,9 +140,12 @@
                    style="text-decoration: none; color: black;">
                     <div class="card" style="margin-bottom: 30px; margin-top: 15px; max-height: 300px;">
                         <div class="card-body">
+                            <h6 class="text-secondary text-center" style="font-size: 14px">Booking# <%=historyResult.getString("booking_id")%>
+                            </h6>
                             <h4 class="card-title text-center"><%=historyResult.getString("name")%>
                             </h4>
-                            <h6 class="text-muted card-subtitle mb-2 text-center"><%=historyResult.getString("address") + ", " + historyResult.getString("state") + ", "
+                            <h6 class="text-muted card-subtitle mb-2 text-center"><%=historyResult.getString("address")
+                                    + ", " + historyResult.getString("state") + ", "
                                     + historyResult.getString("country")%>
                             </h6>
                             <p class="card-text text-center" style="margin-top: 30px">

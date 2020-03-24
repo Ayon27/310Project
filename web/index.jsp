@@ -9,7 +9,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
         response.sendRedirect("login.jsp");
     }
@@ -73,14 +75,14 @@
 
 <div>
     <div class="container">
-        <div class="row">
+        <div class="row" >
             <div class="col-md-6">
-                <div class="contact-clean">
+                <div class="contact-clean" style="background-color: white">
                     <form method="get" action="search.jsp?">
                         <h2 class="text-center">Find a place to stay</h2>
                         <p class="text-center text-danger" name="error"> ${noDateMsg} </p>
                         <div class="form-group"><input required class="form-control" type="text" name="key"
-                                                       placeholder="Search For a Place" value="${defName}"></div>
+                                                       placeholder="Search For a Place" style="color: black" value="${defName}"></div>
                         <div class="form-group"><input pattern="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))" required class="form-control" type="text" id="cinDate"
                                                        autocomplete="off"
                                                        name="cinDate" placeholder="Check-in Date"></div>
@@ -134,7 +136,7 @@
                             </h5>
                             <p class="card-text text-secondary  text-center"><%=entireHouse%>, <%=gym%>, <%=pool%>
                             </p>
-                            <p class="card-text text-secondary  text-center">Hosted by: <%= result.getString("hostName") %>
+                            <p class="card-text text-secondary  text-center">Host: <%= result.getString("hostName") %>
                             </p>
                         </div>
                         <ul class="list-group list-group-flush">

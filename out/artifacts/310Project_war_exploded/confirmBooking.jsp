@@ -10,10 +10,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");%>
 
-<% if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
-    response.sendRedirect("login.jsp");
-}
+
+<%
+    if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
+        response.sendRedirect("login.jsp");
+    }
 
     int placeID = Integer.parseInt(request.getParameter("placeID"));
     String checkIn = request.getParameter("checkIN");
@@ -165,8 +168,8 @@
                                             style="margin-left: 45%; font-size: 24px">Book</b></button>
                                 </div>
 
-                                <div class="collapse" id="confirmMsg">
-                                    <div class="card card-body">
+                                <div class="collapse" id="confirmMsg" >
+                                    <div class="card card-body"  style="border: 0">
                                         <p class="text-center" style="font-size: 24px"> Are you sure?
                                             <input type="hidden" name="placeID" value="<%=placeID%>">
                                             <input type="hidden" name="checkIn" value="<%=checkIn%>">

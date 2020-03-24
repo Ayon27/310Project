@@ -50,7 +50,8 @@ public class BetterPlace extends Place {
     public void insertIntoDB() {
         Connection conn = DatabaseConnection.getConnection();
         try {
-            PreparedStatement stmt = conn.prepareStatement("insert into listing (host_id, name, bedrooms, washrooms, guests, entire_house, has_pool, has_gym," +
+            PreparedStatement stmt = conn.prepareStatement("insert into listing " +
+                    "(host_id, name, bedrooms, washrooms, guests, entire_house, has_pool, has_gym," +
                     " country, state, address, price, hostName) " +
                     "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             stmt.setInt(1, userID);

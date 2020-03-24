@@ -9,11 +9,12 @@
   Time: 9:19 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%
-    if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
+<%     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+
+    if ((session.getAttribute("name") == null)) {
         response.sendRedirect("login.jsp");
     }
-    Connection conn = null;
+        Connection conn = null;
 %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -116,9 +117,6 @@
                 </p>
                 <div class="collapse" id="collapseExample">
                     <div class="card card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
-                        proident.
                     </div>
                 </div>
             </div>
@@ -142,9 +140,12 @@
                    style="text-decoration: none; color: black;">
                     <div class="card" style="margin-bottom: 30px; margin-top: 15px; max-height: 300px;">
                         <div class="card-body">
+                            <h6 class="text-secondary text-center" style="font-size: 14px">Booking# <%=historyResult.getString("booking_id")%>
+                            </h6>
                             <h4 class="card-title text-center"><%=historyResult.getString("name")%>
                             </h4>
-                            <h6 class="text-muted card-subtitle mb-2 text-center"><%=historyResult.getString("address") + ", " + historyResult.getString("state") + ", "
+                            <h6 class="text-muted card-subtitle mb-2 text-center"><%=historyResult.getString("address")
+                                    + ", " + historyResult.getString("state") + ", "
                                     + historyResult.getString("country")%>
                             </h6>
                             <p class="card-text text-center" style="margin-top: 30px">

@@ -5,7 +5,8 @@
   Time: 12:51 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%
+<%     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+
     if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
         response.sendRedirect("login.jsp");
     }
@@ -60,7 +61,7 @@
                         <label style="margin-top: 20px;">
                             Name of Your Place:
                         </label><input required name="name" class="form-control" placeholder="" type="text"
-                                       pattern="[A-Za-z\s]+">
+                                       pattern="[A-Za-z\s]+" maxlength="20">
                     </div>
 
                     <div class="form-group">
@@ -120,7 +121,7 @@
                     <label style="margin-top: 20px;">
                         Country:
                     </label><input required name="country" class="form-control" placeholder="" type="text"
-                                   pattern="[A-Za-z\s]+">
+                                   pattern="[A-Za-z\s]+" maxlength="15">
                 </div>
 
                 <div class="form-group">
@@ -128,20 +129,20 @@
                         State:
                     </label>
                     <input required name="state" class="form-control" placeholder="" type="text"
-                           pattern="[A-Za-z\s]+"></div>
+                           pattern="[A-Za-z\s]+" maxlength="15"></div>
 
                 <div class="form-group">
                     <label style="margin-top: 20px;">
                         Street Address:
                     </label>
-                    <input required name="address" class="form-control" type="text">
+                    <input required name="address" class="form-control" type="text" maxlength="95">
                 </div>
 
                 <div class="form-group">
                     <label style="margin-top: 20px;">
                         Price for one night stay:
                     </label>
-                    <input required name="price" class="form-control" type="number" step="0.01" min="0">
+                    <input required name="price" class="form-control" type="number" step="0.01" min="0" maxlength="20">
                 </div>
 
 

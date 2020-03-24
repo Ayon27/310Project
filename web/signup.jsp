@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");%>
+
 <!DOCTYPE html>
 <html>
 
@@ -43,16 +45,19 @@
             <p class="text-center text-danger" name="error"> ${error} </p>
             <div class="form-group"><input required class="form-control" type="text" name="name"
                                            placeholder="Full name" pattern="[A-Za-z\s]+" maxlength="40"></div>
-            <div class="form-group"><input class="form-control" type="text" placeholder="Country" name="country" pattern="[A-Za-z\s]+"
+            <div class="form-group"><input class="form-control" type="text" placeholder="Country" name="country"
+                                           pattern="[A-Za-z\s]+"
                                            required maxlength="15"></div>
-            <div class="form-group"><input class="form-control" type="text" name="state" placeholder="State" pattern="[A-Za-z\s]+"
+            <div class="form-group"><input class="form-control" type="text" name="state" placeholder="State"
+                                           pattern="[A-Za-z\s]+"
                                            required maxlength="15"></div>
             <div class="form-group"><input required class="form-control" type="text" name="address"
                                            placeholder="Street Address" maxlength="95"></div>
             <div class="form-group"><input required class="form-control" type="text" name="phone"
                                            placeholder="Phone number (without + or any special characters)"
                                            pattern="\d+" maxlength="20"></div>
-            <div class="form-group"><input required class="form-control" type="email" name="email" placeholder="Email" maxlength="80">
+            <div class="form-group"><input required class="form-control" type="email" name="email" placeholder="Email"
+                                           maxlength="80">
             </div>
             <div class="form-group"><input required class="form-control" type="password" name="password"
                                            placeholder="Password (At least one number and one uppercase and lowercase letter, and of length 8 or more)"
@@ -60,7 +65,8 @@
             </div>
             <div class="form-group"><input required class="form-control" type="password" name="password-repeat"
                                            placeholder="Password (repeat)"
-                                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="passRpt" maxlength="15"></div>
+                                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="passRpt" maxlength="15">
+            </div>
             <div class="form-group">
                 <p class="text-center text-danger" id="passError"></p>
 

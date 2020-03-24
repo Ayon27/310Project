@@ -5,7 +5,8 @@
   Time: 7:30 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%
+<%     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+
     if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
         response.sendRedirect("login.jsp");
     }
@@ -101,14 +102,15 @@
                 <li class="list-group-item text-center"><%=result.getString("address")%>, <%=result.getString("state")%>, <%=result.getString("country")%></li>
                 <li class="list-group-item text-center">Rooms: <%=result.getString("bedrooms")%></li>
                 <li class="list-group-item text-center ">Washrooms: <%=result.getString("bedrooms")%></li>
+                <li class="list-group-item text-center ">For: <%=result.getString("guests")%> People</li>
                 <li class="list-group-item text-center">Rent: <%=result.getString("price")%> / Night</li>
             </ul>
             <div class="card-body">
                 <a href="modifyListing.jsp?id=<%=result.getString("id")%>&name=<%=result.getString("name")%>" class="card-link">
-                    <Button class="btn btn-primary" style="background-color: #7abaff; min-width: 45%"> UPDATE</Button>
+                    <Button class="btn btn-primary" style="background-color: #7abaff; min-width: 45%; border: 0px"> UPDATE</Button>
                 </a>
                 <a href="deleteListing.jsp?id=<%=result.getString("id")%>&name=<%=result.getString("name")%>" class="card-link">
-                    <Button style="min-width: 45%; background-color: #7abaff" class="btn btn-primary"> DELETE</Button>
+                    <Button style="min-width: 45%; background-color: #7abaff; border: 0px" class="btn btn-primary"> DELETE</Button>
                 </a>
 
             </div>
