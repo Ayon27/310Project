@@ -25,7 +25,13 @@ public class regCheck extends Thread {
         this.country = country;
         this.state = state;
     }
-    public regCheck(){}
+
+    public regCheck() {
+    }
+
+    public regCheck(String email) {
+        this.email = email;
+    }
 
     public boolean emailValid() {
         boolean valid = false;
@@ -34,7 +40,25 @@ public class regCheck extends Thread {
             PreparedStatement stmt = conn.prepareStatement("select * from user where email =?");
             stmt.setString(1, email);
             ResultSet result = stmt.executeQuery();
-            if(!result.next()) {
+            if (!result.next()) {
+                valid = true;
+            }
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return valid;
+    }
+
+    public static boolean emailValid(String email, int id) {
+        boolean valid = false;
+        Connection conn = DatabaseConnection.getConnection();
+        try {
+            PreparedStatement stmt = conn.prepareStatement("select * from user where email =? AND id != ?");
+            stmt.setString(1, email);
+            stmt.setInt(2, id);
+            ResultSet result = stmt.executeQuery();
+            if (!result.next()) {
                 valid = true;
             }
             conn.close();
@@ -48,7 +72,7 @@ public class regCheck extends Thread {
         boolean valid = true;
 
         String test = str.trim();
-        if(test.length() == 0) {
+        if (test.length() == 0) {
             valid = false;
         }
 
@@ -66,7 +90,7 @@ public class regCheck extends Thread {
 
         boolean valid = true;
         String test = phone.trim();
-        if(test.length() == 0) {
+        if (test.length() == 0) {
             valid = false;
         }
 

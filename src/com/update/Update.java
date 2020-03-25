@@ -2,6 +2,8 @@ package com.update;
 
 import com.DB.DatabaseConnection;
 
+import javax.jms.Session;
+import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

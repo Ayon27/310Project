@@ -1,5 +1,7 @@
 package com.update;
 
+import com.reg.regCheck;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +23,10 @@ public class updateProfile extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         Update updateProfile = new Update(name, email, phone, state, address, country);
+        String s = (String) session.getAttribute("id");
+        int userID = (Integer.parseInt(s));
         updateProfile.setuserID((String) session.getAttribute("id"));
-        updateProfile.insert();
+        if (regCheck.emailValid(email, userID)) updateProfile.insert();
         response.sendRedirect("profile.jsp");
     }
 }

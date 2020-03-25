@@ -9,12 +9,12 @@
   Time: 9:19 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 
     if ((session.getAttribute("name") == null)) {
         response.sendRedirect("login.jsp");
     }
-        Connection conn = null;
+    Connection conn = null;
 %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -140,13 +140,16 @@
                    style="text-decoration: none; color: black;">
                     <div class="card" style="margin-bottom: 30px; margin-top: 15px; max-height: 300px;">
                         <div class="card-body">
-                            <h6 class="text-secondary text-center" style="font-size: 14px">Booking# <%=historyResult.getString("booking_id")%>
+                            <h6 class="text-secondary text-center" style="font-size: 14px">
+                                Booking# <%=historyResult.getString("booking_id")%>
                             </h6>
                             <h4 class="card-title text-center"><%=historyResult.getString("name")%>
                             </h4>
                             <h6 class="text-muted card-subtitle mb-2 text-center"><%=historyResult.getString("address")
                                     + ", " + historyResult.getString("state") + ", "
                                     + historyResult.getString("country")%>
+                                <p>Host: <%=historyResult.getString("hostName")%>
+                                </p>
                             </h6>
                             <p class="card-text text-center" style="margin-top: 30px">
                                 Check-in: <%=historyResult.getString("check_in")%>
@@ -210,7 +213,8 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Phone: </label>
-                            <input required pattern="^(?! )[0-9]*(?<! )$" type="text" name="phone" class="form-control" id="phone"
+                            <input required pattern="^(?! )[0-9]*(?<! )$" type="text" name="phone" class="form-control"
+                                   id="phone"
                                    value="<%=result.getString("phone")%>" maxlength="20">
                         </div>
                     </div>
