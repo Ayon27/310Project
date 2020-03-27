@@ -26,30 +26,7 @@
 </head>
 
 <body>
-<div style="margin-top: 30px">
-    <nav class="navbar navbar-light navbar-expand-md navigation-clean">
-        <div class="container">
-            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span
-                    class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.jsp">Home</a></li>
-
-                    <li class="nav-item" role="presentation"></li>
-                    <li class="dropdown nav-item"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
-                                                     aria-expanded="false"
-                                                     href="#"><% out.print(session.getAttribute("name")); %></a>
-                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                                                  href="profile.jsp">Profile</a><a class="dropdown-item"
-                                                                                                   role="presentation"
-                                                                                                   href="logout.jsp">Log
-                            out</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
+<%@include  file="assets/header.jsp"%>
 
 <div>
     <div class="container">
@@ -68,21 +45,21 @@
                         <label style="margin-top: 20px;">
                             Number of Bedrooms:
                         </label><input required name="bedroom" class="form-control" placeholder="" type="number"
-                                       min="1">
+                                       min="1" maxlength="3">
                     </div>
 
                     <div class="form-group">
                         <label style="margin-top: 20px;">
                             Number of washrooms:
                         </label>
-                        <input required name="washroom" class="form-control" placeholder="" type="number" min="1">
+                        <input required name="washroom" class="form-control" type="number" min="1" max="999">
                     </div>
 
                     <div class="form-group">
                         <label style="margin-top: 20px;">
                             How many guests can stay?
                         </label>
-                        <input required name="guests" class="form-control" type="number" min="1">
+                        <input required name="guests" class="form-control" type="number" min="1" max="999">
                     </div>
 
                     <div class="form-group">
@@ -142,7 +119,7 @@
                     <label style="margin-top: 20px;">
                         Price for one night stay:
                     </label>
-                    <input required name="price" class="form-control" type="number" step="0.01" min="0" maxlength="20">
+                    <input required name="price" class="form-control" type="number" step="0.01" min="0" max="999.">
                 </div>
 
 

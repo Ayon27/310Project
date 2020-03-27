@@ -11,8 +11,9 @@
 --%>
 <% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 
-    if ((session.getAttribute("name") == null)) {
+    if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
         response.sendRedirect("login.jsp");
+        return;
     }
     Connection conn = null;
 %>
@@ -39,39 +40,7 @@
           href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css"/>
 </head>
 <body style="background-color: #EEF4F7;">
-<div>
-    <nav class="navbar navbar-light navbar-expand-md navigation-clean">
-        <div class="container">
-            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span
-                    class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.jsp">Home</a></li>
-
-                    <li class="dropdown nav-item"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
-                                                     aria-expanded="false" href="#">Become a Host</a>
-                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                                                  href="host.jsp">Host a place</a>
-                            <a class="dropdown-item" role="presentation"
-                               href="mylisting.jsp">My Listings</a>
-                    </li>
-
-                    <li class="nav-item" role="presentation"></li>
-                    <li class="dropdown nav-item"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
-                                                     aria-expanded="false"
-                                                     href="#"><% out.print(session.getAttribute("name")); %></a>
-                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                                                  href="profile.jsp">Profile</a>
-                            <a class="dropdown-item"
-                               role="presentation"
-                               href="logout.jsp">Log
-                                out</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
+<%@include  file="assets/header.jsp"%>
 
 <div class="team-boxed" style="background-color: #EEF4F7; ">
     <%
@@ -90,7 +59,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-lg-4 item"
-                 style="background-color: white; margin-top: 70px; border: 1px solid white; border-radius: 5px; box-shadow: 0 0 2px #9f9f9f; max-height: 510px">
+                 style="overflow: auto;background-color: white; margin-top: 70px; border: 1px solid white; border-radius: 5px; box-shadow: 0 0 2px #9f9f9f; max-height: 510px">
                 <div class="box" style="margin-top: 15px"><img class="rounded-circle" src="assets/cnh.png"
                                                                style="width: 200px; margin-left: 20%; margin-top: 10px; margin-bottom: 15px">
                     <h3 class="name" style="text-align: center"><%=result.getString("name")%>

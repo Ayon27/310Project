@@ -1,7 +1,8 @@
 <%@ page import="com.DB.DatabaseConnection" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.PreparedStatement" %>
-<%@ page import="java.sql.ResultSet" %><%--
+<%@ page import="java.sql.ResultSet" %>
+<%--
   Created by IntelliJ IDEA.
   User: Ayn
   Date: 3/4/2020
@@ -16,13 +17,16 @@
     if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
         response.sendRedirect("login.jsp");
     }
-
-    String key = request.getParameter("key");
-    key = key.trim();
-    String checkIn = request.getParameter("cinDate");
-    String checkOut = request.getParameter("coutDate");
-    int guestCount = Integer.parseInt(request.getParameter("guestCount"));
-    // out.print(key + " " + checkIn + " " + checkOut + " " + guestCount);
+    if (request.getParameter("key") == null || request.getParameter("cinDate") == null || request.getParameter("coutDate") == null
+            || request.getParameter("guestCount") == null) {
+        response.sendRedirect("index.jsp");
+    } else {
+        String key = request.getParameter("key");
+        key = key.trim();
+        String checkIn = request.getParameter("cinDate");
+        String checkOut = request.getParameter("coutDate");
+        int guestCount = Integer.parseInt(request.getParameter("guestCount"));
+        // out.print(key + " " + checkIn + " " + checkOut + " " + guestCount);
 %>
 
 <!DOCTYPE html>
@@ -38,39 +42,7 @@
 </head>
 
 <body>
-<div style="margin-top: 20px">
-    <nav class="navbar navbar-light navbar-expand-md navigation-clean">
-        <div class="container">
-            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span
-                    class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.jsp">Home</a></li>
-
-                    <li class="dropdown nav-item"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
-                                                     aria-expanded="false" href="#">Become a Host</a>
-                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                                                  href="host.jsp">Host a place</a>
-                            <a class="dropdown-item" role="presentation"
-                               href="mylisting.jsp">My Listings</a>
-                    </li>
-
-                    <li class="nav-item" role="presentation"></li>
-                    <li class="dropdown nav-item"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
-                                                     aria-expanded="false"
-                                                     href="#"><% out.print(session.getAttribute("name")); %></a>
-                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                                                  href="profile.jsp">Profile</a>
-                            <a class="dropdown-item"
-                               role="presentation"
-                               href="logout.jsp">Log
-                                out</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
+<%@include  file="assets/header.jsp"%>
 
 <div class="container">
     <%
@@ -161,10 +133,11 @@
         </div>
     </a>
     <%
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     %>
 </div>

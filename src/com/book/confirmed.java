@@ -19,25 +19,29 @@ public class confirmed extends HttpServlet {
         String checkOut = request.getParameter("checkOut");
 
         HttpSession session = request.getSession(false);
-        String s = (String) session.getAttribute("id");
-
-        if ((checkIn.matches("\\d{4}-\\d{2}-\\d{2}")) && (checkIn.matches("\\d{4}-\\d{2}-\\d{2}"))) {
-            finalizeBooking<Integer> fb = new finalizeBooking<>(checkIn, checkOut, 33);
-            fb.setPlaceID(Integer.parseInt(placeID));
-            fb.setUserID(s);
-            int bookingID = fb.book();
-
-            session.setAttribute("bookingID", "");
-            String url = "Booked.jsp?bookingID="+bookingID;
-            response.sendRedirect(url);
+        if ((session.getAttribute("name") == null) || (session.getAttribute("id") == null)) {
+            response.sendRedirect("login.jsp");
         } else {
-            request.setAttribute("noDateMsg", "Please Enter Dates to check availability");
-            redir r = new redir();
+            String s = (String) session.getAttribute("id");
 
-            request.setAttribute("noDateMsg", "Enter date to check availability");
-            request.setAttribute("defName", r.getPropertyName(Integer.parseInt(placeID)));
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            rd.include(request, response);
+            if ((checkIn.matches("\\d{4}-\\d{2}-\\d{2}")) && (checkIn.matches("\\d{4}-\\d{2}-\\d{2}"))) {
+                finalizeBooking<Integer> fb = new finalizeBooking<>(checkIn, checkOut, 33);
+                fb.setPlaceID(Integer.parseInt(placeID));
+                fb.setUserID(s);
+                int bookingID = fb.book();
+
+                session.setAttribute("bookingID", "");
+                String url = "Booked.jsp?bookingID=" + bookingID;
+                response.sendRedirect(url);
+            } else {
+                request.setAttribute("noDateMsg", "Please Enter Dates to check availability");
+                redir r = new redir();
+
+                request.setAttribute("noDateMsg", "Enter date to check availability");
+                request.setAttribute("defName", r.getPropertyName(Integer.parseInt(placeID)));
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                rd.include(request, response);
+            }
         }
     }
 }

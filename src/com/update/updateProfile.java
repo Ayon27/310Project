@@ -27,6 +27,7 @@ public class updateProfile extends HttpServlet {
         int userID = (Integer.parseInt(s));
         updateProfile.setuserID((String) session.getAttribute("id"));
         if (regCheck.emailValid(email, userID)) updateProfile.insert();
+        session.setAttribute("name", name);
         response.sendRedirect("profile.jsp");
     }
 }

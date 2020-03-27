@@ -18,9 +18,12 @@
         response.sendRedirect("login.jsp");
     }
 
-    int placeID = Integer.parseInt(request.getParameter("placeID"));
-    String checkIn = request.getParameter("checkIN");
-    String checkOut = request.getParameter("checkOut");
+    if (request.getParameter("placeID") == null || request.getParameter("placeID").equals("")) {
+        response.sendRedirect("index.jsp");
+    } else {
+        int placeID = Integer.parseInt(request.getParameter("placeID"));
+        String checkIn = request.getParameter("checkIN");
+        String checkOut = request.getParameter("checkOut");
 %>
 
 
@@ -40,36 +43,7 @@
 </head>
 
 <body>
-<div style="margin-top: 20px">
-    <nav class="navbar navbar-light navbar-expand-md navigation-clean">
-        <div class="container">
-            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span
-                    class="sr-only"></span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.jsp">Home</a></li>
-
-                    <li class="dropdown nav-item"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
-                                                     aria-expanded="false" href="#">Become a Host</a>
-                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                                                  href="host.jsp">Host a place</a>
-                            <a class="dropdown-item" role="presentation" href="mylisting.jsp">My Listings</a>
-                    </li>
-
-                    <li class="nav-item" role="presentation"></li>
-                    <li class="dropdown nav-item"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
-                                                     aria-expanded="false"
-                                                     href="#"><% out.print(session.getAttribute("name")); %></a>
-                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                                                  href="profile.jsp">Profile</a>
-                            <a class="dropdown-item" role="presentation" href="logout.jsp">Log
-                                out</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
+<%@include  file="assets/header.jsp"%>
 <%
     String s = (String) session.getAttribute("id");
 
@@ -168,8 +142,8 @@
                                             style="margin-left: 45%; font-size: 24px">Book</b></button>
                                 </div>
 
-                                <div class="collapse" id="confirmMsg" >
-                                    <div class="card card-body"  style="border: 0">
+                                <div class="collapse" id="confirmMsg">
+                                    <div class="card card-body" style="border: 0">
                                         <p class="text-center" style="font-size: 24px"> Are you sure?
                                             <input type="hidden" name="placeID" value="<%=placeID%>">
                                             <input type="hidden" name="checkIn" value="<%=checkIn%>">
@@ -194,6 +168,7 @@
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+    }
                     %>
             </form>
         </div>
